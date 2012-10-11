@@ -1,12 +1,8 @@
+language: ruby
 rvm:
-  - 1.8.7
-  - 1.9.2
-  - 1.9.3
-  - ree
-
-script: "bundle exec rake spec"
-
-notifications:
-  disabled: false
-  recipients:
-    - h@rlan.me
+  - "1.8.7"
+  - "1.9.2"
+  - "1.9.3"
+  - "ree"
+bundler_args: --quiet
+script: bundle exec rake spec

@@ -80,6 +80,8 @@ module ReverseMarkdown
           " !["
         when :hr
           "----------\n\n"
+        when :br
+          "  \n"
         else
           handle_error "unknown start tag: #{element.name.to_s}"
           ""
@@ -106,13 +108,18 @@ module ReverseMarkdown
            '` '
           end
         when :a
-          "](#{element.attribute('href').to_s}) "
+          "](#{element['href']}#{title_markdown(element)}) "
         when :img
-          "#{element.attribute('alt')}](#{element.attribute('src')}) "
+          "#{element['alt']}](#{element['src']}#{title_markdown(element)}) "
         else
           handle_error "unknown end tag: #{element.name}"
           ""
       end
+    end
+
+    def title_markdown(element)
+      title = element['title']
+      title ? %[ "#{title}"] : ''
     end
 
     def process_text(element)

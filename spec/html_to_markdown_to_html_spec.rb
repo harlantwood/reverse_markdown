@@ -3,7 +3,7 @@
 require 'redcarpet'
 require 'spec_helper'
 
-describe 'Round trip HTML to markdown to HTML (last step via redcarpet)' do
+describe 'Round trip: HTML to markdown (via reverse_markdown) to HTML (via redcarpet)' do
 
   def normalize_html(html)
     squeeze_whitespace(html).gsub('> <', '><').strip

@@ -6,13 +6,13 @@ describe ReverseMarkdown::Mapper do
   let(:document) { Nokogiri::HTML(input) }
   subject { ReverseMarkdown.parse_string(input) }
 
-  it { subject.should match /# h1\n/ }
-  it { subject.should match /## h2\n/ }
-  it { subject.should match /### h3\n/ }
-  it { subject.should match /#### h4\n/ }
-  it { subject.should match /\*em\*/ }
-  it { subject.should match /\*\*strong\*\*/ }
-  it { subject.should match /`code`/ }
-  it { subject.should match /---/ }
+  it { should match /# h1\n/ }
+  it { should match /## h2\n/ }
+  it { should match /### h3\n/ }
+  it { should match /#### h4\n/ }
+  it { should match /\*em\*/ }
+  it { should match /\*\*strong\*\*/ }
+  it { should match /`code`/ }
+  it { should match /---/ }
 
 end

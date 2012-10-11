@@ -5,4 +5,4 @@ rvm:
   - "1.9.3"
   - "ree"
 bundler_args: --quiet
-script: bundle exec rake spec
+script: bundle exec rspec

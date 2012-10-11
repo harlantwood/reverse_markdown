@@ -14,15 +14,13 @@ module ReverseMarkdown
 
     def process_element(element)
       output = ''
-      output << if element.text?
-        process_text(element)
+      if element.text?
+        output << process_text(element)
       else
-        opening(element)
+        output << opening(element)
+        output << element.children.map{ |child| process_element(child) }.join
+        output << ending(element)
       end
-      element.children.each do |child|
-        output << process_element(child)
-      end
-      output << ending(element) unless element.text?
       output
     end
 

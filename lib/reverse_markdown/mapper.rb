@@ -77,9 +77,9 @@ module ReverseMarkdown
             " `"
           end
         when :a
-          "["
+          " ["
         when :img
-          "!["
+          " !["
         when :hr
           "----------\n\n"
         else
@@ -110,11 +110,7 @@ module ReverseMarkdown
         when :a
           "](#{element.attribute('href').to_s}) "
         when :img
-          if element.has_attribute?('alt')
-            "#{element.attribute('alt')}][#{element.attribute('src')}] "
-          else
-            "#{element.attribute('src')}] "
-          end
+          "#{element.attribute('alt')}](#{element.attribute('src')}) "
         else
           handle_error "unknown end tag: #{element.name}"
           ""

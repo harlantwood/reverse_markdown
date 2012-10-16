@@ -21,6 +21,7 @@ module ReverseMarkdown
         output << element.children.map{ |child| process_element(child) }.join
         output << ending(element)
       end
+      output.gsub!(/ {2,}/, ' ')
       output
     end
 
@@ -75,7 +76,11 @@ module ReverseMarkdown
             " `"
           end
         when :a
-          " ["
+          if !element.text.strip.empty? && element['href'] && !element['href'].start_with?('#')
+            " ["
+          else
+            " "
+          end
         when :img
           " !["
         when :hr
@@ -108,7 +113,11 @@ module ReverseMarkdown
            '` '
           end
         when :a
-          "](#{element['href']}#{title_markdown(element)}) "
+          if !element.text.strip.empty? && element['href'] && !element['href'].start_with?('#')
+            "](#{element['href']}#{title_markdown(element)}) "
+          else
+            ""
+          end
         when :img
           "#{element['alt']}](#{element['src']}#{title_markdown(element)}) "
         else
@@ -128,8 +137,12 @@ module ReverseMarkdown
         when parent == :code && !self.github_style_code_blocks
           element.text.strip.gsub(/\n/,"\n    ")
         else
-          element.text.strip
+          squeeze_whitespace(element.text)
       end
+    end
+
+    def squeeze_whitespace(string)
+      string.tr("\n\t", ' ').squeeze(' ').gsub(/\A \z/, '')
     end
 
     def handle_error(message)

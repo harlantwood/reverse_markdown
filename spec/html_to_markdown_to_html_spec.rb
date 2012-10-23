@@ -5,12 +5,10 @@ require 'spec_helper'
 
 describe 'Round trip: HTML to markdown (via reverse_markdown) to HTML (via redcarpet)' do
 
-  def normalize_html(html)
-    squeeze_whitespace(html).gsub('> <', '><').strip
-  end
+  # helpers
 
-  def squeeze_whitespace(string)
-    string.tr("\n\t", ' ').squeeze(' ').gsub(/\A \z/, '')
+  def roundtrip_should_preserve(orig_html)
+    normalize_html(html2markdown2html orig_html).should == normalize_html(orig_html)
   end
 
   def html2markdown2html(orig_html)
@@ -19,9 +17,15 @@ describe 'Round trip: HTML to markdown (via reverse_markdown) to HTML (via redca
     new_html
   end
 
-  def roundtrip_should_preserve(orig_html)
-    normalize_html(html2markdown2html orig_html).should == normalize_html(orig_html)
+  def normalize_html(html)
+    squeeze_whitespace(html).gsub('> <', '><').strip
   end
+
+  def squeeze_whitespace(string)
+    string.tr("\n\t", ' ').squeeze(' ').gsub(/\A \z/, '')
+  end
+
+  # specs
 
   it "should preserve <blockquote> blocks" do
     roundtrip_should_preserve('<blockquote><p>some text</p></blockquote>')
@@ -53,6 +57,11 @@ describe 'Round trip: HTML to markdown (via reverse_markdown) to HTML (via redca
 
   it "should preserve <em> tags" do
     roundtrip_should_preserve("<p><em>yes!</em></p>")
+  end
+
+  it "should preserve links inside <strong> tags" do
+    pending
+    roundtrip_should_preserve(%{<p><strong><a href="/wiki/Western_philosophy" title="Western philosophy">Western philosophy</a></strong></p>})
   end
 
   it "should preserve <strong> tags" do

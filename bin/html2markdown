@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+
+require 'reverse_markdown/cli'
+ReverseMarkdown::CLI.start

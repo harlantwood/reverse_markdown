@@ -20,6 +20,10 @@ describe ReverseMarkdown do
     expect(ReverseMarkdown.convert(nil)).to eq ''
   end
 
+  it "replaces newlines with whitespace appropriately" do
+    expect(ReverseMarkdown.convert("hello\nworld\n")).to eq "hello world\n\n"
+  end
+
   describe '#config' do
     it 'stores a given configuration option' do
       ReverseMarkdown.config.github_flavored = true
